@@ -1,4 +1,4 @@
-[README.md](https://github.com/user-attachments/files/26195437/README.md)
+[README.md]
 # Design Council
 
 An LLM-powered multi-agent debate system for architectural design optimisation. Specialist AI agents argue over competing design priorities — cost, carbon, and glazing — and reach a consensus on objective weights that drive a Grasshopper parametric optimisation algorithm.
