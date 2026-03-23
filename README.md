@@ -155,8 +155,9 @@ The multi-agent debate structure is inspired by [Andrej Karpathy's llm-council](
 
 ---
 
-## Developed at Heatherwick Studios, London
-ATN AEC Hackathon London - 2026
+## Developed at 
+ATN AEC Hackathon London - March 2026
+Heatherwick Studios, London
 https://www.aectech.us/london-hackathon
 
 Access all projects here , 
