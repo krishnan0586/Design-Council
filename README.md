@@ -103,26 +103,15 @@ If any parameter falls outside the permitted range, the chairperson explains wha
 ## Project Structure
 
 ```
-project/
-├── council_backend/               # FastAPI backend
-│   ├── main.py                    # API endpoints + SSE streaming
-│   ├── council.py                 # Agent logic, debate orchestration
-│   └── requirements.txt
-│
-└── frontend/                      # Next.js frontend
-    ├── app/
-    │   ├── layout.tsx             # Wraps app in CouncilProvider
-    │   └── page.tsx
-    ├── components/
-    │   ├── chat/                  # Chat interface
-    │   ├── roundtable/            # Agent visualisation + weight cards
-    │   └── workspace/             # Three-panel layout shell
-    ├── lib/
-    │   ├── api.ts                 # All fetch + SSE calls to backend
-    │   └── hooks/
-    │       ├── useChat.ts         # Chat state + pipeline orchestration
-    │       └── useCouncilStore.tsx # Global agent state (React context)
-    └── .env.local                 # API keys + backend URL
+Cell 1 — Install & imports
+Cell 2 — Config: API key, model, output path
+Cell 3 — Document parsers (PDF + Excel)
+Cell 4 — BaseAgent class
+Cell 5 — Four specialist agents
+Cell 6 — chairperson Agent
+Cell 7 — Council orchestrator (Stage 1 → Stage 2 → chairperson)
+Cell 8 — Run the council (streaming transcript)
+Cell 9 — Inspect output + write weights_output.json
 ```
 
 ---
