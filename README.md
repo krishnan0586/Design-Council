@@ -143,6 +143,12 @@ Output/
 └── weights_output.txt                             # Weights prescribed by the council (TXT)
 ```
 
+### 3. Working files
+```
+Working/
+└── Design Council.ipynb      # Notebook file for local runs
+```
+
 ## Inspiration
 
 The multi-agent debate structure is inspired by [Andrej Karpathy's llm-council](https://github.com/karpathy/llm-council), adapted here for a domain-specific architectural design context where each agent represents a professional discipline rather than a different LLM provider.
