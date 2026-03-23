@@ -124,61 +124,7 @@ Cell 9 — Inspect output + write weights_output.json
 - Rhino 3D + Grasshopper (for the optimisation step)
 - An API key for OpenAI, Gemini, or a local LM Studio install
 
-### 1. Backend
-
-```bash
-cd council_backend
-pip install -r requirements.txt
-python -m uvicorn main:app --reload --port 8000
-```
-
-### 2. Frontend
-
-```bash
-cd frontend
-npm install
-npm run dev
-```
-
-Open `http://localhost:3001` (or whichever port Next.js assigns).
-
-### 3. Configure your API provider
-
-In `frontend/.env.local`:
-
-```
-# Gemini
-NEXT_PUBLIC_GEMINI_API_KEY=AIza...
-
-# or OpenAI
-NEXT_PUBLIC_OPENAI_API_KEY=sk-...
-
-NEXT_PUBLIC_API_URL=http://localhost:8000
-```
-
-In `council_backend/council.py`, set the provider:
-
-```python
-# OpenAI
-MODEL = "gpt-4o"
-def _make_client(api_key): return OpenAI(api_key=api_key)
-
-# Gemini
-MODEL = "gemini-2.0-flash"
-def _make_client(api_key): return OpenAI(
-    api_key=api_key,
-    base_url="https://generativelanguage.googleapis.com/v1beta/openai/",
-)
-
-# LM Studio (local)
-MODEL = "your-local-model-name"
-def _make_client(api_key): return OpenAI(api_key="lm-studio", base_url="http://localhost:1234/v1")
-```
-
-### 4. Input files
-
-Place your project documents in a folder. The frontend will ask you to select the `Client Brief.xlsx` — the other three files are expected in the same folder:
-
+### 1. Input files
 ```
 Input/
 ├── Client Brief.xlsx          # Project type, area range, budget range
@@ -187,66 +133,15 @@ Input/
 └── Building Regulations.xlsx  # Floor height range, occupancy range
 ```
 
-**Excel format** — each file uses a simple two-column key/value layout with an optional unit column:
-
+### 2. Output files
 ```
-| project_type        | Grade A Commercial Office |        |
-| min_area            | 23000                     | m2     |
-| max_area            | 25300                     | m2     |
-| min_budget          | 75000000                  | £      |
-| max_budget          | 82500000                  | £      |
+Output/
+├── Design Council_Workflow Diagram.jpg            # Diagram image for reference
+├── Optimization Results.xlsx                      # Final results from Grasshopper after optimisations
+├── Weights_Input.gh                               # Grasshopper script (sync)
+└── weights_output.json                            # Weights prescribed by the council (JSON)
+└── weights_output.txt                             # Weights prescribed by the council (TXT)
 ```
-
-### 5. Grasshopper bridge
-
-In a GHPython component, point to the output text file:
-
-```python
-import os
-
-# Input: txt_path (string)
-# Outputs: cost_gbp, carbon_eq, glazing_ratio
-
-if not txt_path or not os.path.exists(txt_path):
-    cost_gbp = carbon_eq = glazing_ratio = 0.0
-else:
-    weights = {}
-    with open(txt_path, "r") as f:
-        for line in f:
-            if "=" in line:
-                key, val = line.strip().split("=", 1)
-                weights[key.strip()] = float(val.strip())
-
-    cost_gbp      = weights.get("cost_gbp",      0.0)
-    carbon_eq     = weights.get("carbon_eq",     0.0)
-    glazing_ratio = weights.get("glazing_ratio", 0.0)
-```
-
-Connect a Timer component to poll the file. Wire the three weight outputs into your fitness expression:
-
-```
-fitness = (cost_score * cost_gbp) + (carbon_score * carbon_eq) + (glazing_score * glazing_ratio)
-```
-
----
-
-## Chat commands
-
-Once the frontend is running, the chat interface accepts these commands:
-
-| Command | Action |
-|---|---|
-| `start` | Initialise and run the full council (Stage 1 + 2 + Chairperson) |
-| `skip` | Skip human input, let chairperson decide independently |
-| `continue` | Pass your human input to the chairperson without rerunning the debate |
-| `rerun` | Restart the debate with current context injected into agent prompts |
-| `validate` | Validate optimisation results against document ranges |
-| `summary` | Generate a final project summary |
-| `status` | Show current pipeline state |
-
-Any other message is routed to the LLM as a general question about the project.
-
----
 
 ## Inspiration
 
