@@ -1,60 +1,25 @@
-[README.md]
 # Design Council
 
 An LLM-powered multi-agent debate system for architectural design optimisation. Specialist AI agents argue over competing design priorities — cost, carbon, and glazing — and reach a consensus on objective weights that drive a Grasshopper parametric optimisation algorithm.
 
-<img width="2559" height="1418" alt="image (1)" src="https://github.com/user-attachments/assets/f4fce3e5-45da-46a1-ac5b-5f04d8a487df" />
+<img width="2559" height="1418" alt="Design Council UI" src="https://github.com/user-attachments/assets/f4fce3e5-45da-46a1-ac5b-5f04d8a487df"/>
 
 ---
 
 ## What it does
 
 Traditional parametric optimisation in architecture requires designers to manually assign weights to competing objectives—how much does cost matter versus sustainability versus spatial quality? This is inherently a multi-disciplinary judgement that involves quantity surveyors, sustainability consultants, and design architects pulling in different directions.
+
 This project replaces that manual weighting process with a structured AI debate. Three specialist agents — each loaded with their own domain documents — argue their case, challenge each other's positions, and reach a compromise. A chairperson agent synthesises the debate into a final set of objective weights, which are written directly to a file that Grasshopper reads in real time.
 
 ---
 
-## System overview
-
-```
-Client Brief (xlsx)          Costing Information (xlsx)
-Sustainability (xlsx)        Building Regulations (xlsx)
-        |                               |
-        v                               v
-+-----------------------------------------------+
-|            LLM Council (FastAPI backend)       |
-|                                                |
-|  Stage 1: Each agent reads its documents and  |
-|           proposes weights independently       |
-|                                                |
-|  Stage 2: Agents see each other's arguments,  |
-|           make concessions, challenge claims  |
-|                                                |
-|  Human:   Chairperson asks stakeholder one    |
-|           focused question before deciding    |
-|                                                |
-|  Stage 3: Chairperson synthesises debate and  |
-|           delivers final objective weights    |
-+-----------------------------------------------+
-        |
-        v
-weights_output.json + weights_output.txt
-        |
-        v
-+-----------------------------------------------+
-|           Grasshopper (Rhino 3D)              |
-|                                                |
-|  FileSystemWatcher reads weights in real time |
-|  Fitness function: f = w1*cost + w2*carbon   |
-|                        + w3*glazing           |
-|  Optimiser (Galapagos/Octopus) varies         |
-|  geometry to maximise/minimise fitness        |
-+-----------------------------------------------+
-```
+## Multi-Agent Pipeline
+<img width="1240" height="1754" alt="Design Council_Workflow Diagram" src="https://github.com/user-attachments/assets/a2ef5d90-2acb-43fb-a52e-c41ca59dd6b4"/>
 
 ---
 
-## The three objective weights
+## Sample Scenario - Three Objectives
 
 The council debates and produces weights for three parameters that feed the optimisation algorithm:
 
@@ -68,7 +33,7 @@ All weights sum to 1.0. A higher weight means the optimiser prioritises that obj
 
 ---
 
-## The agents
+## The Agents
 
 ### Design Brief Agent
 Loads the client brief (Excel or PDF) and advocates for faithful interpretation of the client's spatial requirements, programme, and architectural quality targets. Pushes back on cost and carbon arguments that would compromise the brief.
@@ -84,7 +49,7 @@ Receives the full debate transcript and synthesises a final verdict. Before deci
 
 ---
 
-## Debate structure
+## Processing Structure
 
 **Stage 1 — First opinions**
 Each agent independently reviews its documents and the project context, then proposes weights and argues its case in 100–150 words citing specific figures.
@@ -104,7 +69,7 @@ The chairperson reads the condensed debate transcript and the stakeholder instru
 
 ---
 
-## Optimisation validation
+## Optimisation Validation
 
 After Grasshopper runs the optimisation and produces a result, the system validates the output against the original document ranges:
 
@@ -120,7 +85,7 @@ If any parameter falls outside the permitted range, the chairperson explains wha
 
 ---
 
-## Tech stack
+## Tech Stack
 
 | Component | Technology |
 |---|---|
@@ -135,7 +100,7 @@ If any parameter falls outside the permitted range, the chairperson explains wha
 
 ---
 
-## Project structure
+## Project Structure
 
 ```
 project/
@@ -300,6 +265,9 @@ The multi-agent debate structure is inspired by [Andrej Karpathy's llm-council](
 
 ---
 
-## Developed at
+## Developed at Heatherwick Studios, London
+ATN AEC Hackathon London - 2026
+https://www.aectech.us/london-hackathon
 
-ATN AEC Hackathon — Architecture, Engineering & Construction AI Challenge
+Access all projects here  — 
+https://www.aectech.us/hackathon-archive
