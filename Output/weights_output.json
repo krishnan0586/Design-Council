@@ -1,0 +1,47 @@
+{
+  "objective_weights": {
+    "cost_gbp": 0.45,
+    "carbon_eq": 0.35,
+    "glazing_ratio": 0.2
+  },
+  "parameter_definitions": {
+    "cost_gbp": "Total construction cost in \u00a3 (floor plate + facade)",
+    "carbon_eq": "Embodied carbon in kg CO\u2082e/m\u00b3 across all materials",
+    "glazing_ratio": "Facade glazing percentage (transparent vs opaque area)"
+  },
+  "project_ranges": {
+    "budget_range_gbp": [
+      75000000.0,
+      82500000.0
+    ],
+    "floor_cost_range_gbp_m2": [
+      650.0,
+      900.0
+    ],
+    "glazing_ratio_range": [
+      0.54,
+      0.66
+    ],
+    "carbon_per_material": {
+      "concrete": 405.0,
+      "timber": 104.0,
+      "steel": 1500.0
+    }
+  },
+  "reasoning": "FINAL_WEIGHTS: cost_gbp=0.45, carbon_eq=0.35, glazing_ratio=0.20  \nThe stakeholder\u2019s directive to revise all cost projections for a 10\u202f% uplift forces the optimiser to prioritise financial control; hence cost receives the highest weight (0.45). Carbon remains a strong driver (0.35) because embodied\u2011carbon reductions are essential for BREEAM Excellent, yet it is slightly down\u2011weighted from the sustainability agent\u2019s 0.63 to accommodate tighter budgets. Glazing is set at 0.20 to preserve daylighting performance while limiting fa\u00e7ade spend, recognising that higher glass ratios would erode the new cost ceiling. This balanced weighting respects all agents\u2019 concerns and aligns with the updated cost envelope.",
+  "metadata": {
+    "project": "Grade A Commercial Office",
+    "generated_at": "2026-03-15T11:03:32.317526+00:00",
+    "model": "gpt-oss:20b",
+    "lm_studio_url": "http://100.81.6.149:1234/v1",
+    "debate_rounds": 1,
+    "agents": [
+      "design_brief",
+      "sustainability",
+      "cost_consultancy"
+    ],
+    "human_input_raw": "the budgets have been increased by 10%",
+    "human_input_expanded": "Revise all cost projections and resource allocations to incorporate a 10",
+    "rerun_requested": false
+  }
+}

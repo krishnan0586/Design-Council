@@ -1,0 +1,3 @@
+cost_gbp=0.45
+carbon_eq=0.35
+glazing_ratio=0.20
